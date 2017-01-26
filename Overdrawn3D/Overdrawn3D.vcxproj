@@ -41,9 +41,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>F:\OPENGL STUFF\Final\Overdrawn3D\Overdrawn3D\glfw;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>F:\OPENGL STUFF\Final\Overdrawn3D\Overdrawn3D\glfw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -61,6 +64,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="glfw\glfw3.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="engine\camera.h" />
+    <ClInclude Include="engine\entity.h" />
+    <ClInclude Include="engine\renderer.h" />
+    <ClInclude Include="engine\world.h" />
+    <ClInclude Include="window.h" />
+    <ClInclude Include="geo\vector.h" />
+    <ClInclude Include="glfw\glfw3.h" />
+    <ClInclude Include="glfw\glfw3native.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="glfw\glfw3.lib" />
+    <Library Include="glfw\glfw3dll.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

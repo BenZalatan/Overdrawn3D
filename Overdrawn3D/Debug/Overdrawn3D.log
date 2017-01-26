@@ -1,0 +1,31 @@
+﻿Build started 1/25/2017 9:37:30 PM.
+     1>Project "F:\OPENGL STUFF\Final\Overdrawn3D\Overdrawn3D\Overdrawn3D.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\Overdrawn3D.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"F:\OPENGL STUFF\Final\Overdrawn3D\Overdrawn3D\glfw" /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt window.cpp
+         window.cpp
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\geo\vector.h(23): warning C4172: returning address of local variable or temporary
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\camera.h(26): warning C4305: '=' : truncation from 'double' to 'float'
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\camera.h(88): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\camera.h(89): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\camera.h(90): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\camera.h(120): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\camera.h(121): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\OPENGL STUFF\Final\Overdrawn3D\Debug\Overdrawn3D.exe" /NOLOGO /LIBPATH:"F:\OPENGL STUFF\Final\Overdrawn3D\Overdrawn3D\glfw" opengl32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Overdrawn3D.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\OPENGL STUFF\Final\Overdrawn3D\Debug\Overdrawn3D.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\OPENGL STUFF\Final\Overdrawn3D\Debug\Overdrawn3D.lib" /MACHINE:X86 Debug\window.obj
+         glfw\glfw3.lib
+         glfw\glfw3dll.lib
+         LINK : F:\OPENGL STUFF\Final\Overdrawn3D\Debug\Overdrawn3D.exe not found or not built by the last incremental link; performing full link
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+         Overdrawn3D.vcxproj -> F:\OPENGL STUFF\Final\Overdrawn3D\Debug\Overdrawn3D.exe
+       Manifest:
+         c:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"F:\OPENGL STUFF\Final\Overdrawn3D\Debug\Overdrawn3D.exe;#1" /manifest Debug\Overdrawn3D.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Debug\Overdrawn3D.unsuccessfulbuild".
+         Touching "Debug\Overdrawn3D.lastbuildstate".
+     1>Done Building Project "F:\OPENGL STUFF\Final\Overdrawn3D\Overdrawn3D\Overdrawn3D.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.40
