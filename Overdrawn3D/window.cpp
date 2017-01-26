@@ -8,6 +8,62 @@
 #include "engine\camera.h"
 #include "engine\world.h"
 
+// Input (must be before main, put in different file later)
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if(action == GLFW_PRESS)
+	{
+		if (key == GLFW_KEY_W)
+			camera.movingForward = true;
+		if (key == GLFW_KEY_S)
+			camera.movingBackward = true;
+		if (key == GLFW_KEY_A)
+			camera.movingLeft = true;
+		if (key == GLFW_KEY_D)
+			camera.movingRight = true;
+		
+		if(key == GLFW_KEY_SPACE && camera.physics.grounded)
+			camera.physics.velocity.y += 0.25;
+	}
+	else if(action == GLFW_RELEASE)
+	{
+		if (key == GLFW_KEY_W)
+			camera.movingForward = false;
+		if (key == GLFW_KEY_S)
+			camera.movingBackward = false;
+		if (key == GLFW_KEY_A)
+			camera.movingLeft = false;
+		if (key == GLFW_KEY_D)
+			camera.movingRight = false;
+	}
+}
+
+#define MOUSE_SENS 0.1f
+
+float mouseLastX, mouseLastY;
+bool mouseIgnore = true;
+static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	if(mouseIgnore)
+	{
+		mouseIgnore = FALSE;
+		mouseLastX = xpos;
+		mouseLastY = ypos;
+		return;
+	}
+
+	camera.rotation.y += (xpos - mouseLastX) * MOUSE_SENS;
+	camera.rotation.x += (ypos - mouseLastY) * MOUSE_SENS;
+	if(camera.rotation.x > 90.0) camera.rotation.x = 90.0;
+	else if(camera.rotation.x < -90.0) camera.rotation.x = -90.0;
+
+	mouseLastX = xpos;
+	mouseLastY = ypos;
+}
+
+// Window stuff
+
 GLFWwindow *window;
 
 int main()
@@ -19,7 +75,12 @@ int main()
 		return -1;
 	}
 
-	window = glfwCreateWindow(WIN_WIDTH, WIN_HEIGHT, "Test", NULL, NULL);
+	window = glfwCreateWindow(
+		/*WIN_WIDTH*/ glfwGetVideoMode(glfwGetPrimaryMonitor())->width,
+		/*WIN_HEIGHT*/ glfwGetVideoMode(glfwGetPrimaryMonitor())->height,
+		"Test",
+		glfwGetPrimaryMonitor(),
+		NULL);
 
 	if(!window)
 	{
@@ -30,33 +91,49 @@ int main()
 	}
 
 	glfwMakeContextCurrent(window);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetKeyCallback(window, key_callback);
+	glfwSetCursorPosCallback(window, cursor_position_callback);
 
-	camera = camera_t(90.0);
+	// Initialize world
+
+	camera = camera_t(110.0);
+	camera.location = vec3_t(0, 5, 0);
+	camera.scale = vec3_t(1, 5, 1);
+	camera.physics.drag = vec3_t(0.5, 1, 0.5);
+	camera.physics.enabled = true;
+
 	world = world_t();
 	world.objects[0] = entity_t(
-		vec3_t(0, -2, 0),
+		vec3_t(0, -5, 0),
 		vec3_t(0, 0, 0),
-		vec3_t(20, 0, 20));
+		vec3_t(20, 1, 20));
 
 	camera.init();
+	
+	// Main loop
 
-    while (!glfwWindowShouldClose(window))
-    {
+	while (!glfwWindowShouldClose(window))
+	{
 		nowTime = glfwGetTime();
-        deltaTime += (nowTime - lastTime) / (1 / WIN_MAXFPS);
-        lastTime = nowTime;
+		deltaTime += (nowTime - lastTime) / (1 / WIN_MAXFPS);
+		lastTime = nowTime;
 
-        while (deltaTime >= 1.0)
+		while (deltaTime >= 1.0)
 		{
 			camera.draw();
+			camera.runPhysics();
+			camera.physics.velocity.y -= 0.005;
+			//camera.physics.velocity.print();
+			camera.run();
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
 
 			deltaTime--;
 		}
-    }
+	}
 
-    glfwTerminate();
-    return 0;
+	glfwTerminate();
+	return 0;
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdio.h>
+
 class vec3_t
 {
 public:
@@ -21,5 +23,19 @@ public:
 	{
 		float ret[] = { x, y, z, w };
 		return ret;
+	}
+
+	void print()
+	{
+		printf("(%f, %f, %f)\n", x, y, z);
+	}
+
+	vec3_t multiplyby(float v)
+	{
+		return vec3_t(x * v, y * v, z * v);
+	}
+	vec3_t multiply(vec3_t v)
+	{
+		return vec3_t(x * v.x, y * v.y, z * v.z);
 	}
 };

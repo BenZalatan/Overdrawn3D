@@ -9,10 +9,6 @@
 #include "../window.h"
 #include "world.h"
 
-#define PI 3.14159265359
-#define RAD_TO_DEG (180 / PI)
-#define DEG_TO_RAD (PI / 180)
-
 class camera_t : public entity_t
 {
 public:
@@ -26,7 +22,13 @@ public:
 		nearClip = 0.001;
 		farClip = 1000.0;
 		fov = _fov;
+
+		moveSpeed = 0.1;
+		movingForward = movingBackward = movingLeft = movingRight = false;
 	}
+
+	float moveSpeed;
+	bool movingForward, movingBackward, movingLeft, movingRight;
 
 	void init()
 	{
@@ -37,6 +39,7 @@ public:
 		glMatrixMode(GL_PROJECTION);
 
 		buildPerspective();
+		glScalef(1.0f, 1.0f, 1.0f);
 
 		glMatrixMode(GL_MODELVIEW);
 	}
@@ -50,7 +53,7 @@ public:
 		glRotatef(rotation.y, 0, 1, 0);
 		glRotatef(rotation.z, 0, 0, 1);
 
-		glTranslatef(location.x, location.y, location.z);
+		glTranslatef(-location.x, -location.y, -location.z);
 
 		glShadeModel(GL_SMOOTH);
 
@@ -107,6 +110,41 @@ public:
 				loc.z);
 
 			glEnd();
+		}
+	}
+
+	void run()
+	{
+		if(movingForward)
+		{
+			float angle = 0.0;
+			if(movingLeft) angle -= 45.0;
+			if(movingRight) angle += 45.0;
+
+			physics.velocity.x = forward(angle).multiplyby(moveSpeed).x;
+			physics.velocity.z = forward(angle).multiplyby(moveSpeed).z;
+		}
+		else if(movingBackward)
+		{
+			float angle = 0.0;
+			if(movingLeft) angle -= 45.0;
+			if(movingRight) angle += 45.0;
+
+			physics.velocity.x = forward(-angle).multiplyby(-moveSpeed).x;
+			physics.velocity.z = forward(-angle).multiplyby(-moveSpeed).z;
+		}
+		else
+		{
+			if(movingLeft)
+			{
+				physics.velocity.x = forward(-90).multiplyby(moveSpeed).x;
+				physics.velocity.z = forward(-90).multiplyby(moveSpeed).z;
+			}
+			if(movingRight)
+			{
+				physics.velocity.x = forward(90).multiplyby(moveSpeed).x;
+				physics.velocity.z = forward(90).multiplyby(moveSpeed).z;
+			}
 		}
 	}
 

@@ -47,6 +47,9 @@
     <ClInclude Include="engine\world.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\physics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="glfw\glfw3.lib" />

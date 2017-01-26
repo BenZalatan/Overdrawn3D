@@ -1,7 +1,14 @@
 #pragma once
 
+#include <math.h>
+
 #include "../geo/vector.h"
 #include "renderer.h"
+#include "physics.h"
+
+#define PI 3.14159265359
+#define RAD_TO_DEG (180 / PI)
+#define DEG_TO_RAD (PI / 180)
 
 class entity_t
 {
@@ -9,6 +16,7 @@ public:
 
 	entity_t()
 	{
+		enabled = false;
 	}
 	entity_t(vec3_t loc, vec3_t rot, vec3_t size, vec3_t col = vec3_t(1, 1, 1))
 	{
@@ -17,64 +25,49 @@ public:
 		scale = size;
 
 		renderer.color = col;
+
+		physics.enabled = false;
+		physics.velocity = vec3_t();
+		physics.drag = vec3_t(0.5, 1, 0.5);
+
+		enabled = true;
 	}
 
 	vec3_t location, rotation, scale;
 	renderer_t renderer;
-};
-
-///// PHYSICS /////
-
-class physics_t
-{
-public:
-
+	physics_t physics;
 	bool enabled;
-	vec3_t velocity, drag;
 
-	bool isGrounded() { return grounded; }
-
-	void run(entity_t *obj)
+	vec3_t forward(float angle = 0.0)
 	{
-		if(!enabled) return;
-
-		bool x, y, z;
-		for(uint32_t i; i < WORLD_OBJECT_COUNT; i++)
-		{
-			if(!intersects(obj, world.objects[i], vec3_t(velocity.x, 0, 0))) x = false;
-			if(!intersects(obj, world.objects[i], vec3_t(0, velocity.y, 0))) y = false;
-			if(!intersects(obj, world.objects[i], vec3_t(0, 0, velocity.z))) z = false;
-		}
-
-		if(x) obj->location.x += velocity.x;
-
-		if(y)
-		{
-			obj->location.y += velocity.y;
-			grounded = false;
-		}
-		else grounded = true;
-
-		if(z) obj->location.z += velocity.z;
+		return vec3_t(
+			-cos((rotation.y + 90 + angle) * DEG_TO_RAD),
+			0,
+			-sin((rotation.y + 90 + angle) * DEG_TO_RAD)
+			);
 	}
 
-private:
-
-	bool grounded;
-
-	bool intersects(entity_t *obj1, entity_t *obj2, vec3_t offset = vec3_t(0, 0, 0))
+	bool intersects(entity_t obj2, vec3_t offset = vec3_t(0, 0, 0))
 	{
-		obj1->location.x -= obj1->scale.x / 2.0 - offset.x;
-		obj1->location.y -= obj1->scale.y / 2.0 - offset.y;
-		obj1->location.z -= obj1->scale.z / 2.0 - offset.z;
+		vec3_t loc = location;
 
-		obj2->location.x -= obj2->scale.x / 2.0;
-		obj2->location.y -= obj2->scale.y / 2.0;
-		obj2->location.z -= obj2->scale.z / 2.0;
+		loc.x -= scale.x / 2.0 - offset.x;
+		loc.y -= scale.y / 2.0 - offset.y;
+		loc.z -= scale.z / 2.0 - offset.z;
+
+		loc.x += offset.x;
+		loc.y += offset.y;
+		loc.z += offset.z;
+
+		obj2.location.x -= obj2.scale.x / 2.0;
+		obj2.location.y -= obj2.scale.y / 2.0;
+		obj2.location.z -= obj2.scale.z / 2.0;
 
 		return
-			(obj1->location.x + obj1->scale.x >= obj2->location.x && obj2->location.x + obj2->scale.x >= obj1->location.x) && 
-			(obj1->location.y + obj1->scale.y >= obj2->location.y && obj2->location.y + obj2->scale.y >= obj1->location.y) && 
-			(obj1->location.z + obj1->scale.z >= obj2->location.z && obj2->location.z + obj2->scale.z >= obj1->location.z);
+			(loc.x + scale.x >= obj2.location.x && obj2.location.x + obj2.scale.x >= loc.x) && 
+			(loc.y + scale.y >= obj2.location.y && obj2.location.y + obj2.scale.y >= loc.y) && 
+			(loc.z + scale.z >= obj2.location.z && obj2.location.z + obj2.scale.z >= loc.z);
 	}
+
+	void runPhysics();
 };
