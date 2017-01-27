@@ -71,6 +71,7 @@
   <ItemGroup>
     <ClInclude Include="engine\camera.h" />
     <ClInclude Include="engine\entity.h" />
+    <ClInclude Include="engine\light.h" />
     <ClInclude Include="engine\physics.h" />
     <ClInclude Include="engine\renderer.h" />
     <ClInclude Include="engine\world.h" />

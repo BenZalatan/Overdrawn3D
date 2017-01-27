@@ -35,6 +35,8 @@ public:
 		glEnable(GL_NORMALIZE);
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_COLOR_MATERIAL);
+		
+		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
 		glMatrixMode(GL_PROJECTION);
 
@@ -42,6 +44,9 @@ public:
 		glScalef(1.0f, 1.0f, 1.0f);
 
 		glMatrixMode(GL_MODELVIEW);
+
+		for(uint8_t i = 0; i < LIGHT_COUNT; i++)
+			world.lights[i].init(i);
 	}
 	
 	void draw()
@@ -56,6 +61,9 @@ public:
 		glTranslatef(-location.x, -location.y, -location.z);
 
 		glShadeModel(GL_SMOOTH);
+
+		for(uint8_t i = 0; i < LIGHT_COUNT; i++)
+			world.lights[i].run(i);
 
 		for(uint16_t i = 0; i < WORLD_OBJECT_COUNT; i++)
 		{
@@ -92,18 +100,22 @@ public:
 			loc.y -= world.objects[i].scale.y / 2.0;
 			loc.z -= world.objects[i].scale.z / 2.0;
 
+			glNormal3f(0, 1, 0);
 			glVertex3f(
 				loc.x,
 				loc.y,
 				loc.z);
+			glNormal3f(0, 1, 0);
 			glVertex3f(
 				loc.x,
 				loc.y,
 				loc.z + world.objects[i].scale.z);
+			glNormal3f(0, 1, 0);
 			glVertex3f(
 				loc.x + world.objects[i].scale.x,
 				loc.y,
 				loc.z + world.objects[i].scale.z);
+			glNormal3f(0, 1, 0);
 			glVertex3f(
 				loc.x + world.objects[i].scale.x,
 				loc.y,

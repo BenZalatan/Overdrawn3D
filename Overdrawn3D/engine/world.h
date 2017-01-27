@@ -4,6 +4,7 @@
 
 #include "entity.h"
 #include "physics.h"
+#include "light.h"
 
 #define WORLD_OBJECT_COUNT 0xFF /* 255 */
 
@@ -17,6 +18,7 @@ public:
 	}
 
 	entity_t objects[WORLD_OBJECT_COUNT];
+	light_t lights[LIGHT_COUNT];
 };
 
 world_t world;

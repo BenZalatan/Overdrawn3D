@@ -22,6 +22,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			camera.movingLeft = true;
 		if (key == GLFW_KEY_D)
 			camera.movingRight = true;
+		if (key == GLFW_KEY_L)
+			world.lights[0].location = camera.location;
 		
 		if(key == GLFW_KEY_SPACE && camera.physics.grounded)
 			camera.physics.velocity.y += 0.25;
@@ -108,6 +110,10 @@ int main()
 		vec3_t(0, -5, 0),
 		vec3_t(0, 0, 0),
 		vec3_t(20, 1, 20));
+	world.lights[0] = light_t();
+	world.lights[0].location = vec3_t(0, 0, 0);
+	world.lights[0].diffuse = vec3_t(1, 1, 1);
+	world.lights[0].enabled = true;
 
 	camera.init();
 	
