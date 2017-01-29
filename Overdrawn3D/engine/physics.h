@@ -34,14 +34,21 @@ public:
 
 		material = physicsmat_t();
 		inheritMaterial = true;
+
+		movingPlatform = true;
 	}
 
 	bool enabled;
-	vec3_t velocity, drag;
+	vec3_t velocity, addedVelocity /* automatic */, drag;
 
-	bool grounded, pushable, inheritMaterial;
+	bool grounded /* auto */, pushable, inheritMaterial, movingPlatform;
 
 	uint32_t lastGroundedObject;
 
-	physicsmat_t material, inheritedMaterial /* automatically changed; don't touch */;
+	physicsmat_t material, inheritedMaterial /* automatic */;
+
+	vec3_t fullVelocity()
+	{
+		return velocity.add(addedVelocity);
+	}
 };

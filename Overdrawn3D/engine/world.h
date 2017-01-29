@@ -36,6 +36,9 @@ void entity_t::runPhysics()
 {
 	if(!physics.enabled) return;
 
+	if(!physics.inheritMaterial)
+		physics.inheritedMaterial = physics.material;
+
 	bool x = true, y = true, z = true;
 	for(uint32_t i = 0; i < WORLD_OBJECT_COUNT; i++)
 	{
@@ -59,7 +62,7 @@ void entity_t::runPhysics()
 			x = false;
 			if(world.objects[i].physics.pushable)
 			{
-				world.objects[i].physics.velocity.x += physics.velocity.x * (1 - physics.inheritedMaterial.heaviness);
+				world.objects[i].physics.velocity.x += physics.fullVelocity().x * (1 - physics.inheritedMaterial.heaviness);
 				physics.velocity.x = physics.velocity.x * (1 - physics.inheritedMaterial.heaviness);
 			}
 		}
@@ -68,30 +71,33 @@ void entity_t::runPhysics()
 			y = false;
 			if(world.objects[i].physics.pushable)
 			{
-				world.objects[i].physics.velocity.y += physics.velocity.y * (1 - physics.inheritedMaterial.heaviness);
+				world.objects[i].physics.velocity.y += physics.fullVelocity().y * (1 - physics.inheritedMaterial.heaviness);
 				physics.velocity.y = physics.velocity.y * (1 - physics.inheritedMaterial.heaviness);
 			}
 			physics.lastGroundedObject = i;
 
 			if(physics.inheritMaterial)
 				physics.inheritedMaterial = world.objects[i].physics.material;
+
+			if(physics.movingPlatform)
+				physics.addedVelocity = world.objects[i].physics.fullVelocity();
 		}
 		if(!stepz)
 		{
 			z = false;
 			if(world.objects[i].physics.pushable)
 			{
-				world.objects[i].physics.velocity.z += physics.velocity.z * (1 - physics.inheritedMaterial.heaviness);
+				world.objects[i].physics.velocity.z += physics.fullVelocity().z * (1 - physics.inheritedMaterial.heaviness);
 				physics.velocity.z = physics.velocity.z * (1 - physics.inheritedMaterial.heaviness);
 			}
 		}
 	}
 
-	if(x) location.x += physics.velocity.x;
+	if(x) location.x += physics.fullVelocity().x;
 
 	if(y)
 	{
-		location.y += physics.velocity.y;
+		location.y += physics.fullVelocity().y;
 		physics.grounded = false;
 	}
 	else
@@ -107,10 +113,10 @@ void entity_t::runPhysics()
 		physics.velocity.y *= -physics.inheritedMaterial.bounciness;
 
 		if(physics.velocity.y != 0.0)
-			location.y += physics.velocity.y;
+			location.y += physics.fullVelocity().y;
 	}
 
-	if(z) location.z += physics.velocity.z;
+	if(z) location.z += physics.fullVelocity().z;
 
 	physics.velocity.x *= physics.drag.x * (1 + physics.inheritedMaterial.slipperiness) > 1.0 ? 1.0 : physics.drag.x * (1 + physics.inheritedMaterial.slipperiness);
 	physics.velocity.y *= physics.drag.y * (1 + physics.inheritedMaterial.slipperiness) > 1.0 ? 1.0 : physics.drag.y * (1 + physics.inheritedMaterial.slipperiness);

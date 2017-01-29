@@ -15,7 +15,7 @@ KNOWN BUGS:
 - objects go through camera (no camera collision detection)
 - being inside of an object causes it to move with you (easy to see with pushable, bouncy objects) (will likely be fixed when camera collision is)
 - [not a bug] heaviness doesn't work due to how the camera moves
-- no moving platform (camera moving with object below it)
+- jumping on a bouncing object (sometimes) launches you up into the atmosphere
 
 NOTES:
 
@@ -50,6 +50,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		}
 		if(key == GLFW_KEY_R)
 			world.objects[1].location = vec3_t(0, 50, 0);
+		if(key == GLFW_KEY_F)
+			world.objects[1].physics.velocity.y += 0.25;
 		
 		if(key == GLFW_KEY_SPACE && camera.physics.grounded)
 			camera.physics.velocity.y += 0.25;
@@ -110,8 +112,8 @@ int main()
 	}
 
 	window = glfwCreateWindow(
-		WIN_WIDTH /*glfwGetVideoMode(glfwGetPrimaryMonitor())->width*/,
-		WIN_HEIGHT /*glfwGetVideoMode(glfwGetPrimaryMonitor())->height*/,
+		/*WIN_WIDTH*/ glfwGetVideoMode(glfwGetPrimaryMonitor())->width,
+		/*WIN_HEIGHT*/ glfwGetVideoMode(glfwGetPrimaryMonitor())->height,
 		"Test",
 		glfwGetPrimaryMonitor(),
 		NULL);
@@ -174,6 +176,11 @@ int main()
 
 	world.objects[4] = entity_t(
 		vec3_t(35, 5, 0),
+		vec3_t(0, 0, 0),
+		vec3_t(1, 10, 20));
+
+	world.objects[7] = entity_t(
+		vec3_t(-35, 5, 0),
 		vec3_t(0, 0, 0),
 		vec3_t(1, 10, 20));
 	//

@@ -31,6 +31,14 @@ public:
 		printf("(%f, %f, %f)\n", x, y, z);
 	}
 
+	vec3_t addby(float v)
+	{
+		return vec3_t(x + v, y + v, z + v);
+	}
+	vec3_t add(vec3_t v)
+	{
+		return vec3_t(x + v.x, y + v.y, z + v.z);
+	}
 
 	vec3_t subtractby(float v)
 	{
