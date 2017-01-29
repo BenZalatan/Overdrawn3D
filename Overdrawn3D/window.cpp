@@ -8,6 +8,21 @@
 #include "engine\camera.h"
 #include "engine\world.h"
 
+/* 
+
+KNOWN BUGS:
+
+- objects go through camera (no camera collision detection)
+- being inside of an object causes it to move with you (easy to see with pushable, bouncy objects) (will likely be fixed when camera collision is)
+- [not a bug] heaviness doesn't work due to how the camera moves
+- no moving platform (camera moving with object below it)
+
+NOTES:
+
+- i tried out camera collision (as you can see by the messy world.h), but it caused problems, but ill retry it later
+
+*/
+
 // Input (must be before main, put in different file later)
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -29,7 +44,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			world.lights[0].location.print();
 		}
 		if(key == GLFW_KEY_C)
+		{
 			camera.scale.y = 1;
+			camera.moveSpeed = 0.025;
+		}
+		if(key == GLFW_KEY_R)
+			world.objects[1].location = vec3_t(0, 50, 0);
 		
 		if(key == GLFW_KEY_SPACE && camera.physics.grounded)
 			camera.physics.velocity.y += 0.25;
@@ -48,6 +68,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		{
 			camera.scale.y = 5;
 			camera.location.y += 2;
+			camera.moveSpeed = 0.1;
 		}
 	}
 }
@@ -117,13 +138,45 @@ int main()
 	camera.scale = vec3_t(1, 5, 1); // camera height is 1/2 scale.y (5 = 2.5 actual height)
 	camera.physics.drag = vec3_t(0.5, 1, 0.5);
 	camera.physics.enabled = true;
+	camera.physics.pushable = true;
 	camera.enabled = true;
+	camera.drawLights = true;
 
 	world = world_t();
 	world.objects[0] = entity_t(
 		vec3_t(0, 0, 0),
 		vec3_t(0, 0, 0),
 		vec3_t(20, 1, 20));
+	//
+	world.objects[2] = entity_t(
+		vec3_t(25, 0, 0),
+		vec3_t(0, 0, 0),
+		vec3_t(20, 1, 20),
+		vec3_t(0, 1, 1));
+	world.objects[2].physics.material.slipperiness = 0.97;
+
+	world.objects[5] = entity_t(
+		vec3_t(12.5, 0, 0),
+		vec3_t(0, 0, 0),
+		vec3_t(5, 1, 5));
+	
+	world.objects[3] = entity_t(
+		vec3_t(-25, 0, 0),
+		vec3_t(0, 0, 0),
+		vec3_t(20, 1, 20),
+		vec3_t(1, 0, 1));
+	world.objects[3].physics.material.bounciness = 1;
+
+	world.objects[6] = entity_t(
+		vec3_t(-12.5, 0, 0),
+		vec3_t(0, 0, 0),
+		vec3_t(5, 1, 5));
+
+	world.objects[4] = entity_t(
+		vec3_t(35, 5, 0),
+		vec3_t(0, 0, 0),
+		vec3_t(1, 10, 20));
+	//
 
 	world.objects[1] = entity_t(
 		vec3_t(5, 20, 5),
@@ -133,12 +186,16 @@ int main()
 	world.objects[1].physics.enabled = true;
 	world.objects[1].physics.drag = vec3_t(0.5, 1, 0.5);
 	world.objects[1].physics.pushable = true;
+	//world.objects[1].physics.material = physicsmat_t(0.25, 0.65, 0.5);
+	//world.objects[1].physics.inheritMaterial = false;
 
 	world.lights[0] = light_t();
 	//world.lights[0].location = vec3_t(0.5, 3, 1);
 	world.lights[0].location = vec3_t(3, 12, 1);
 	world.lights[0].diffuse = vec3_t(1, 1, 1);
 	world.lights[0].enabled = true;
+	world.lights[0].scale = vec3_t(1, 1, 1);
+	world.lights[0].renderer.color = vec3_t(1, 1, 1);
 
 	camera.init();
 	
@@ -153,9 +210,9 @@ int main()
 		while (deltaTime >= 1.0)
 		{
 			camera.draw();
+			camera.run();
 			camera.runPhysics();
 			runWorldPhysics();
-			camera.run();
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
