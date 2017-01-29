@@ -44,13 +44,13 @@
     <ClInclude Include="engine\renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\world.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\world.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

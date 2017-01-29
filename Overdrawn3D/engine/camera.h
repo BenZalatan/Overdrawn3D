@@ -100,26 +100,119 @@ public:
 			loc.y -= world.objects[i].scale.y / 2.0;
 			loc.z -= world.objects[i].scale.z / 2.0;
 
-			glNormal3f(0, 1, 0);
+			// BOTTOM
+			glNormal3f(0, -1, 0);
 			glVertex3f(
 				loc.x,
 				loc.y,
 				loc.z);
-			glNormal3f(0, 1, 0);
 			glVertex3f(
 				loc.x,
 				loc.y,
 				loc.z + world.objects[i].scale.z);
-			glNormal3f(0, 1, 0);
 			glVertex3f(
 				loc.x + world.objects[i].scale.x,
 				loc.y,
 				loc.z + world.objects[i].scale.z);
-			glNormal3f(0, 1, 0);
 			glVertex3f(
 				loc.x + world.objects[i].scale.x,
 				loc.y,
 				loc.z);
+
+			// TOP
+			glNormal3f(0, 1, 0);
+			glVertex3f(
+				loc.x,
+				loc.y + world.objects[i].scale.y,
+				loc.z);
+			glVertex3f(
+				loc.x,
+				loc.y + world.objects[i].scale.y,
+				loc.z + world.objects[i].scale.z);
+			glVertex3f(
+				loc.x + world.objects[i].scale.x,
+				loc.y + world.objects[i].scale.y,
+				loc.z + world.objects[i].scale.z);
+			glVertex3f(
+				loc.x + world.objects[i].scale.x,
+				loc.y + world.objects[i].scale.y,
+				loc.z);
+
+			// LEFT
+			glNormal3f(-1, 0, 0);
+			glVertex3f(
+				loc.x,
+				loc.y,
+				loc.z);
+			glVertex3f(
+				loc.x,
+				loc.y,
+				loc.z + world.objects[i].scale.z);
+			glVertex3f(
+				loc.x,
+				loc.y + world.objects[i].scale.y,
+				loc.z + world.objects[i].scale.z);
+			glVertex3f(
+				loc.x,
+				loc.y + world.objects[i].scale.y,
+				loc.z);
+
+			// RIGHT
+			glNormal3f(1, 0, 0);
+			glVertex3f(
+				loc.x + world.objects[i].scale.x,
+				loc.y,
+				loc.z);
+			glVertex3f(
+				loc.x + world.objects[i].scale.x,
+				loc.y,
+				loc.z + world.objects[i].scale.z);
+			glVertex3f(
+				loc.x + world.objects[i].scale.x,
+				loc.y + world.objects[i].scale.y,
+				loc.z + world.objects[i].scale.z);
+			glVertex3f(
+				loc.x + world.objects[i].scale.x,
+				loc.y + world.objects[i].scale.y,
+				loc.z);
+
+			// BACK
+			glNormal3f(0, 0, -1);
+			glVertex3f(
+				loc.x,
+				loc.y,
+				loc.z);
+			glVertex3f(
+				loc.x + world.objects[i].scale.x,
+				loc.y,
+				loc.z);
+			glVertex3f(
+				loc.x + world.objects[i].scale.x,
+				loc.y + world.objects[i].scale.y,
+				loc.z);
+			glVertex3f(
+				loc.x,
+				loc.y + world.objects[i].scale.y,
+				loc.z);
+
+			// FRONT
+			glNormal3f(0, 0, 1);
+			glVertex3f(
+				loc.x,
+				loc.y,
+				loc.z + world.objects[i].scale.z);
+			glVertex3f(
+				loc.x + world.objects[i].scale.x,
+				loc.y,
+				loc.z + world.objects[i].scale.z);
+			glVertex3f(
+				loc.x + world.objects[i].scale.x,
+				loc.y + world.objects[i].scale.y,
+				loc.z + world.objects[i].scale.z);
+			glVertex3f(
+				loc.x,
+				loc.y + world.objects[i].scale.y,
+				loc.z + world.objects[i].scale.z);
 
 			glEnd();
 		}

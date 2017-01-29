@@ -9,5 +9,5 @@ public:
 	bool enabled;
 	vec3_t velocity, drag;
 
-	bool grounded;
+	bool grounded, pushable;
 };

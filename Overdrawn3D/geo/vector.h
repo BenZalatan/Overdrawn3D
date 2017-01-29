@@ -80,6 +80,11 @@ public:
 
 		return vec3_t(x / len, y / len, z / len);
 	}
+
+	bool equals(vec3_t v)
+	{
+		return (x == v.x && y == v.y && z == v.z);
+	}
 };
 
 vec3_t generateNormal(vec3_t *verts)
