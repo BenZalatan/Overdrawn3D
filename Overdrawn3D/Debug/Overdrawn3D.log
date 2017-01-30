@@ -1,4 +1,4 @@
-﻿Build started 1/29/2017 4:44:34 PM.
+﻿Build started 1/29/2017 9:30:59 PM.
      1>Project "F:\OPENGL STUFF\Final\Overdrawn3D\Overdrawn3D\Overdrawn3D.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Overdrawn3D.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -18,26 +18,27 @@
      1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\camera.h(25): warning C4305: '=' : truncation from 'double' to 'float'
      1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\camera.h(81): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\camera.h(82): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(111): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(121): warning C4244: '*=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(122): warning C4244: '*=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(123): warning C4244: '*=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(125): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(185): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(186): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(187): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(338): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(339): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(340): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(49): warning C4305: '=' : truncation from 'double' to 'float'
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(73): warning C4305: '=' : truncation from 'double' to 'float'
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(87): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(88): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(92): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(93): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(97): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(98): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(158): warning C4305: '=' : truncation from 'double' to 'float'
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(115): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(126): warning C4244: '*=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(127): warning C4244: '*=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(128): warning C4244: '*=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(130): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(190): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(191): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(192): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(343): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(344): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\engine\world.h(345): warning C4244: '-=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(51): warning C4305: '=' : truncation from 'double' to 'float'
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(77): warning C4305: '=' : truncation from 'double' to 'float'
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(80): warning C4305: '=' : truncation from 'double' to 'float'
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(93): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(94): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(98): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(99): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(103): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(104): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>f:\opengl stuff\final\overdrawn3d\overdrawn3d\window.cpp(165): warning C4305: '=' : truncation from 'double' to 'float'
        Link:
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"F:\OPENGL STUFF\Final\Overdrawn3D\Debug\Overdrawn3D.exe" /NOLOGO /LIBPATH:"F:\OPENGL STUFF\Final\Overdrawn3D\Overdrawn3D\glfw" opengl32.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Overdrawn3D.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"F:\OPENGL STUFF\Final\Overdrawn3D\Debug\Overdrawn3D.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"F:\OPENGL STUFF\Final\Overdrawn3D\Debug\Overdrawn3D.lib" /MACHINE:X86 Debug\window.obj
          glfw\glfw3.lib
@@ -54,4 +55,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.68
+Time Elapsed 00:00:01.43

@@ -39,6 +39,8 @@ void entity_t::runPhysics()
 	if(!physics.inheritMaterial)
 		physics.inheritedMaterial = physics.material;
 
+	physics.addedVelocity = vec3_t();
+
 	bool x = true, y = true, z = true;
 	for(uint32_t i = 0; i < WORLD_OBJECT_COUNT; i++)
 	{
@@ -94,11 +96,13 @@ void entity_t::runPhysics()
 	}
 
 	if(x) location.x += physics.fullVelocity().x;
+	else physics.velocity.x *= -physics.material.bounciness;
 
 	if(y)
 	{
 		location.y += physics.fullVelocity().y;
 		physics.grounded = false;
+		physics.inheritedMaterial = physics.material;
 	}
 	else
 	{
@@ -117,6 +121,7 @@ void entity_t::runPhysics()
 	}
 
 	if(z) location.z += physics.fullVelocity().z;
+	else physics.velocity.z *= -physics.material.bounciness;
 
 	physics.velocity.x *= physics.drag.x * (1 + physics.inheritedMaterial.slipperiness) > 1.0 ? 1.0 : physics.drag.x * (1 + physics.inheritedMaterial.slipperiness);
 	physics.velocity.y *= physics.drag.y * (1 + physics.inheritedMaterial.slipperiness) > 1.0 ? 1.0 : physics.drag.y * (1 + physics.inheritedMaterial.slipperiness);

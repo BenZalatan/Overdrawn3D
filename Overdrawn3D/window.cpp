@@ -8,6 +8,8 @@
 #include "engine\camera.h"
 #include "engine\world.h"
 
+#include "engine/shadows.h"
+
 /* 
 
 KNOWN BUGS:
@@ -15,7 +17,7 @@ KNOWN BUGS:
 - objects go through camera (no camera collision detection)
 - being inside of an object causes it to move with you (easy to see with pushable, bouncy objects) (will likely be fixed when camera collision is)
 - [not a bug] heaviness doesn't work due to how the camera moves
-- jumping on a bouncing object (sometimes) launches you up into the atmosphere
+- walking into a wall on top of a moving object causes you to teleport on top of it
 
 NOTES:
 
@@ -31,47 +33,51 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	{
 		if (key == GLFW_KEY_W)
 			camera.movingForward = true;
-		if (key == GLFW_KEY_S)
+		else if (key == GLFW_KEY_S)
 			camera.movingBackward = true;
-		if (key == GLFW_KEY_A)
+		else if (key == GLFW_KEY_A)
 			camera.movingLeft = true;
-		if (key == GLFW_KEY_D)
+		else if (key == GLFW_KEY_D)
 			camera.movingRight = true;
-		if (key == GLFW_KEY_L)
+		else if (key == GLFW_KEY_L)
 		{
 			world.lights[0].location = camera.location;
 			printf("New light location: ");
 			world.lights[0].location.print();
 		}
-		if(key == GLFW_KEY_C)
+		else if(key == GLFW_KEY_C)
 		{
 			camera.scale.y = 1;
 			camera.moveSpeed = 0.025;
 		}
-		if(key == GLFW_KEY_R)
+		else if(key == GLFW_KEY_R)
 			world.objects[1].location = vec3_t(0, 50, 0);
-		if(key == GLFW_KEY_F)
+		else if(key == GLFW_KEY_F)
 			world.objects[1].physics.velocity.y += 0.25;
+		else if(key == GLFW_KEY_LEFT_SHIFT && camera.scale.y != 1)
+			camera.moveSpeed = 0.25;
 		
-		if(key == GLFW_KEY_SPACE && camera.physics.grounded)
+		else if(key == GLFW_KEY_SPACE && camera.physics.grounded)
 			camera.physics.velocity.y += 0.25;
 	}
 	else if(action == GLFW_RELEASE)
 	{
 		if (key == GLFW_KEY_W)
 			camera.movingForward = false;
-		if (key == GLFW_KEY_S)
+		else if (key == GLFW_KEY_S)
 			camera.movingBackward = false;
-		if (key == GLFW_KEY_A)
+		else if (key == GLFW_KEY_A)
 			camera.movingLeft = false;
-		if (key == GLFW_KEY_D)
+		else if (key == GLFW_KEY_D)
 			camera.movingRight = false;
-		if(key == GLFW_KEY_C)
+		else if(key == GLFW_KEY_C)
 		{
 			camera.scale.y = 5;
 			camera.location.y += 2;
 			camera.moveSpeed = 0.1;
 		}
+		else if(key == GLFW_KEY_LEFT_SHIFT && camera.scale.y != 1)
+			camera.moveSpeed = 0.1;
 	}
 }
 
@@ -111,6 +117,9 @@ int main()
 		return -1;
 	}
 
+	glfwWindowHint(GLFW_SAMPLES, 4);
+	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
 	window = glfwCreateWindow(
 		/*WIN_WIDTH*/ glfwGetVideoMode(glfwGetPrimaryMonitor())->width,
 		/*WIN_HEIGHT*/ glfwGetVideoMode(glfwGetPrimaryMonitor())->height,
@@ -130,8 +139,6 @@ int main()
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetCursorPosCallback(window, cursor_position_callback);
-
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 	// Initialize world
 
