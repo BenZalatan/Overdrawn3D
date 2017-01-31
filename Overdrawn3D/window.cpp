@@ -27,6 +27,7 @@ NOTES:
 
 // Input (must be before main, put in different file later)
 
+uint16_t lastIndex = 9;
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if(action == GLFW_PRESS)
@@ -56,6 +57,18 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			world.objects[1].physics.velocity.y += 0.25;
 		else if(key == GLFW_KEY_LEFT_SHIFT && camera.scale.y != 1)
 			camera.moveSpeed = 0.25;
+		else if(key == GLFW_KEY_G)
+		{
+			world.objects[lastIndex] = entity_t(
+				camera.location,
+				vec3_t(0, 0, 0),
+				vec3_t(3, 3, 3),
+				vec3_t(1, 0, 0));
+			world.objects[lastIndex].physics.enabled = true;
+			world.objects[lastIndex].physics.drag = vec3_t(0.5, 1, 0.5);
+			world.objects[lastIndex].physics.pushable = true;
+			lastIndex++;
+		}
 		
 		else if(key == GLFW_KEY_SPACE && camera.physics.grounded)
 			camera.physics.velocity.y += 0.25;
@@ -190,6 +203,14 @@ int main()
 		vec3_t(-35, 5, 0),
 		vec3_t(0, 0, 0),
 		vec3_t(1, 10, 20));
+
+	world.objects[8] = entity_t(
+		vec3_t(0, 0, 21),
+		vec3_t(0, 0, 0),
+		vec3_t(20, 1, 20));
+	world.objects[8].physics.enabled = true;
+	world.objects[8].physics.drag = vec3_t(1, 0, 0);
+	world.objects[8].physics.useGravity = false;
 	//
 
 	world.objects[1] = entity_t(
@@ -215,6 +236,8 @@ int main()
 	
 	// Main loop
 
+	bool rev = false;
+
 	while (!glfwWindowShouldClose(window))
 	{
 		nowTime = glfwGetTime();
@@ -227,6 +250,10 @@ int main()
 			camera.run();
 			camera.runPhysics();
 			runWorldPhysics();
+
+			world.objects[8].physics.velocity.x = 0.025 * (rev ? -1 : 1);
+			if(world.objects[8].location.x >= 25.0) rev = true;
+			else if(world.objects[8].location.x <= -25.0) rev = false;
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();

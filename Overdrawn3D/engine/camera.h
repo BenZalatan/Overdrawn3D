@@ -78,7 +78,7 @@ private:
 	void buildPerspective()
 	{
 		float
-			fovy = RAD_TO_DEG * 2 * atan(tan(fov * DEG_TO_RAD / 2) * ((float)WIN_HEIGHT / (float)WIN_WIDTH)),
+			fovy = RAD_TO_DEG * 2 * atan(tan(fov * DEG_TO_RAD / 2) * ((float)glfwGetVideoMode(glfwGetPrimaryMonitor())->height / (float)glfwGetVideoMode(glfwGetPrimaryMonitor())->width)),
 			h = tan(fovy / 360 * PI) * nearClip,
 			w = h * WIN_WIDTH / WIN_HEIGHT;
 	

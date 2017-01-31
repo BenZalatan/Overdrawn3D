@@ -49,6 +49,8 @@ void entity_t::runPhysics()
 		bool stepx, stepy, stepz;
 		stepx = stepy = stepz = true;
 
+		//stepx etc are probably not needed and can be replaced with x etc
+
 		for(uint8_t j = 0; j < WORLD_COLLISION_STEP_COUNT; j++)
 		{
 			if(intersects(world.objects[i], vec3_t(j * physics.velocity.x / WORLD_COLLISION_STEP_COUNT, 0, 0)))
@@ -71,17 +73,12 @@ void entity_t::runPhysics()
 		if(!stepy)
 		{
 			y = false;
-			if(world.objects[i].physics.pushable)
-			{
-				world.objects[i].physics.velocity.y += physics.fullVelocity().y * (1 - physics.inheritedMaterial.heaviness);
-				physics.velocity.y = physics.velocity.y * (1 - physics.inheritedMaterial.heaviness);
-			}
 			physics.lastGroundedObject = i;
 
 			if(physics.inheritMaterial)
 				physics.inheritedMaterial = world.objects[i].physics.material;
 
-			if(physics.movingPlatform)
+			if(physics.movingPlatform && world.objects[i].physics.enabled)
 				physics.addedVelocity = world.objects[i].physics.fullVelocity();
 		}
 		if(!stepz)
@@ -127,18 +124,26 @@ void entity_t::runPhysics()
 	physics.velocity.y *= physics.drag.y * (1 + physics.inheritedMaterial.slipperiness) > 1.0 ? 1.0 : physics.drag.y * (1 + physics.inheritedMaterial.slipperiness);
 	physics.velocity.z *= physics.drag.z * (1 + physics.inheritedMaterial.slipperiness) > 1.0 ? 1.0 : physics.drag.z * (1 + physics.inheritedMaterial.slipperiness);
 
-	physics.velocity.y -= WORLD_GRAVITY * (1 + physics.material.heaviness);
+	if(physics.useGravity)
+		physics.velocity.y -= WORLD_GRAVITY * (1 + physics.material.heaviness);
 
 	// TEMPORARY; ONLY FOR TESTING
 
 	if(location.y <= -50.0)
+	{
 		location = vec3_t(0, 50, 0);
+		physics.velocity = vec3_t();
+	}
 }
 
 void runWorldPhysics()
 {
 	for(uint32_t i = 0; i < WORLD_OBJECT_COUNT; i++)
+	{
+		if(!world.objects[i].physics.enabled) continue;
+
 		world.objects[i].runPhysics();
+	}
 }
 
 // CAMERA STUFF
@@ -148,6 +153,8 @@ void camera_t::init()
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
+
+	glDepthFunc(GL_LEQUAL);
 		
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
@@ -173,7 +180,7 @@ void camera_t::draw()
 
 	glTranslatef(-location.x, -location.y - scale.y / 2, -location.z);
 
-	glShadeModel(GL_SMOOTH);
+	glShadeModel(GL_FLAT);
 
 	for(uint8_t i = 0; i < LIGHT_COUNT; i++)
 	{

@@ -28,20 +28,24 @@ public:
 	{
 		enabled = false;
 		velocity = vec3_t();
+		addedVelocity = vec3_t();
 		drag = vec3_t(0.5, 1, 0.5);
 		grounded = false;
 		pushable = false;
+
+		lastGroundedObject = 0;
 
 		material = physicsmat_t();
 		inheritMaterial = true;
 
 		movingPlatform = true;
+		useGravity = true;
 	}
 
 	bool enabled;
 	vec3_t velocity, addedVelocity /* automatic */, drag;
 
-	bool grounded /* auto */, pushable, inheritMaterial, movingPlatform;
+	bool grounded /* auto */, pushable, inheritMaterial, movingPlatform, useGravity;
 
 	uint32_t lastGroundedObject;
 

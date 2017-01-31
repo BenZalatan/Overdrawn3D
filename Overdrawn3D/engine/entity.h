@@ -26,6 +26,7 @@ public:
 
 		renderer.color = col;
 
+		physics = physics_t();
 		physics.enabled = false;
 		physics.velocity = vec3_t();
 		physics.drag = vec3_t(0.5, 1, 0.5);
